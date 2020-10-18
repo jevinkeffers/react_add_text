@@ -6,30 +6,52 @@ class Addtext extends Component {
         output: []
     };
 
-    _handleSubmit = async (event) => {
-        event.preventDefault();
-        const { input } = this.state;
-        const newOutput = [...this.state.output, input];
-        this.setState({
-            input: '',
-            output: newOutput
-        });
-}
-        
     _handleChange = (newInput) => {
         this.setState({
             input: newInput,
         });
     }
 
+    _addText = () => {
+        const { input, output } = this.state;
+        const newOutput = [...output, input];
+        this.setState({
+            input: '',
+            output: newOutput
+        });
+    }
+        
+    _deleteText = () => {
+        const { output } = this.state;
+        let newOutput = [...output];
+        newOutput.pop()
+        this.setState({
+            output: newOutput
+        });
+    }
+
+
     render() {
         return (
             <div>
+                <h1>
+                    Add and delete words we hope
+                </h1>
                 <input
                     type="text"
-                    value={this.state.value}
-                    onChange={this.handleChange}
+                    value={this.state.input}
+                    onChange={(event) =>
+                        this._handleChange(event.target.value)}
                 />
+                <p>
+                <button type="button" onClick={this._addText}>Add word</button>
+                </p>
+                <p>
+                    {this.state.output.join(" ")}
+                </p>
+                <p>
+                <button type="button" onClick={this._deleteText}>Delete word</button>
+                </p>
             </div>
         );
     }
